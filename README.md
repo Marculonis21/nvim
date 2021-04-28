@@ -1,1 +1,5 @@
-# nvim
+*Marek Bečvář*
+
+# NEOVIM CONFIG
+
+`~/.config/nvim/`
