@@ -81,8 +81,9 @@ let g:startify_lists = [
           \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
           \ ]
 let g:startify_bookmarks = [
-            \ { 'c': '~/.config/i3/config' },
+            \ { 'p': '~/.config/nvim/plugins.vim' },
             \ { 'i': '~/.config/nvim/init.vim' },
+            \ { 'c': '~/.config/i3/config' },
             \ { 'z': '~/.zshrc' },
             \ '~/Desktop/Projects',
             \ '~/Desktop/UK/MFF-Stuff',
@@ -106,45 +107,36 @@ let g:OmniSharp_popup_mappings = {
 \}
 
 let g:OmniSharp_popup_mappings.close = '<Esc>'
-let g:OmniSharp_popup_position = 'peek'
-let g:OmniSharp_popup_options = {
-  \ 'winhl': 'Normal:NormalFloat'
-  \}
+let g:OmniSharp_popup_position = 'center'
 " let g:OmniSharp_popup_options = {
-" \ 'highlight': 'Normal',
-" \ 'padding': [1],
-" \ 'border': [1]
-" \}
+"   \ 'winhl': 'Normal:NormalFloat'
+"   \}
 
 augroup omnisharp_commands
     autocmd!
 
+    autocmd FileType cs nnoremap <C-x> :lnext<CR>
+    autocmd FileType cs nnoremap <C-p> :lprev<CR>
     " Show type information automatically when the cursor stops moving
     " autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
 
+    autocmd FileType cs nnoremap <buffer> osgd :OmniSharpGotoDefinition<CR>
+    autocmd FileType cs nnoremap <buffer> osgd :OmniSharpGotoDefinition<CR>
+
     " The following commands are contextual, based on the cursor position.
-    autocmd FileType cs nnoremap <buffer> gd :OmniSharpGotoDefinition<CR>
-    autocmd FileType cs nnoremap <buffer> <Leader>fi :OmniSharpFindImplementations<CR>
-    autocmd FileType cs nnoremap <buffer> <Leader>fs :OmniSharpFindSymbol<CR>
-    autocmd FileType cs nnoremap <buffer> <Leader>fu :OmniSharpFindUsages<CR>
-
-    " Finds members in the current buffer
-    autocmd FileType cs nnoremap <buffer> <Leader>fm :OmniSharpFindMembers<CR>
-
-    autocmd FileType cs nnoremap <buffer> <Leader>fx :OmniSharpFixUsings<CR>
-    autocmd FileType cs nnoremap <buffer> <Leader>tt :OmniSharpTypeLookup<CR>
-    autocmd FileType cs nnoremap <buffer> <Leader>dc :OmniSharpDocumentation<CR>
-    autocmd FileType cs nnoremap <buffer> <C-\> :OmniSharpSignatureHelp<CR>
-    autocmd FileType cs inoremap <buffer> <C-\> <C-o>:OmniSharpSignatureHelp<CR>
+    autocmd FileType cs nnoremap <buffer> osgd :OmniSharpGotoDefinition<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>osfi :OmniSharpFindImplementations<CR>
 
     " Find all code errors/warnings for the current solution and populate the quickfix window
-    autocmd FileType cs nnoremap <buffer> <Leader>cc :OmniSharpGlobalCodeCheck<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>oscc :OmniSharpGlobalCodeCheck<CR>
+
+    " Contextual code actions (uses fzf, vim-clap, CtrlP or unite.vim selector when available)
+    autocmd FileType cs nmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
+    autocmd FileType cs xmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
 augroup END
 
-let g:ale_linters = {
-\ 'cs': ['OmniSharp'],
-\}
-let g:ale_linters_explicit = 1
+let g:ale_linters = { 'cs': ['OmniSharp'] }
+" let g:ale_linters_explicit = 1
 
 let g:startify_custom_header = [
 \ '',
